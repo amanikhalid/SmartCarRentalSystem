@@ -134,7 +134,10 @@ namespace SmartCarRentalSystem
                 return days * 40;
             }
 
+            public override string GetInfo() => $"{base.GetInfo()} | Motorbike | Helmet Required: {(RequiresHelmet ? "Yes" : "No")}"; // Display motorbike info
         }
+
+    }
          
         
         
