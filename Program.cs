@@ -41,8 +41,20 @@ namespace SmartCarRentalSystem
                     DisplayVehicles(filtered);
                 }
 
+                else if (option == 3) // Rent a Vehicle
+                {
+                    Console.WriteLine("\nWhich type of vehicle would you like to rent?");
+                    Console.WriteLine("1. Car\n2. Truck\n3. Motorbike");
+                    int type = GetIntInput("Choose type: ", 1, 3);
+
+                    List<Vehicle> list = vehicles.FindAll(v =>
+                        (type == 1 && v is Car) ||
+                        (type == 2 && v is Truck) ||
+                        (type == 3 && v is Motorbike));
+
+
+                }
             }
-        }
 
         static void LoadData()
         {
