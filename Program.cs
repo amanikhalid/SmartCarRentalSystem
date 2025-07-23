@@ -76,6 +76,12 @@ namespace SmartCarRentalSystem
                 int days = GetIntInput("Enter number of rental days: ", 1, 365); // Rental days input
                 double total = 0;
 
+                if (selected is Car car) // Calculate rental cost for car
+                {
+                    bool withDriver = GetYesNo("Need a driver? (y/n): ");
+                    total = car.CalculateRentalCost(days, withDriver);
+                }
+
             }
 
         static void LoadData()
