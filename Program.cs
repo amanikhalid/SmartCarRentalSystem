@@ -127,7 +127,12 @@ namespace SmartCarRentalSystem
         class Motorbike : Vehicle // Inherits from Vehicle
         
         {
+            public bool RequiresHelmet { get; set; } // Indicates if a helmet is required
 
+            public override double CalculateRentalCost(int days)
+            {
+                return days * 40;
+            }
 
         }
          
