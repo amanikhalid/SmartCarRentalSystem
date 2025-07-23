@@ -137,14 +137,26 @@ namespace SmartCarRentalSystem
             public override string GetInfo() => $"{base.GetInfo()} | Motorbike | Helmet Required: {(RequiresHelmet ? "Yes" : "No")}"; // Display motorbike info
         }
 
+        static int GetIntInput(string prompt, int min, int max) // Method to get integer input from user
+
+        {
+            while (true) // Prompt user for integer input
+        
+            {
+                Console.Write(prompt);
+                if (int.TryParse(Console.ReadLine(), out int value) && value >= min && value <= max)
+                    return value;
+                Console.WriteLine("Invalid input. Try again.");
+            }
+        }
+
     }
          
         
         
-    }
-
-
 }
+
+
 
 
 
