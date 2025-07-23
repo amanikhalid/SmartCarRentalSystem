@@ -13,23 +13,18 @@ namespace SmartCarRentalSystem
         {
             LoadData();
 
-            while (true)
+            while (true) // Main menu loop
             {
                 Console.Clear();
                 Console.WriteLine("\nSmartCar Rentals Main Menu");
                 Console.WriteLine("1. View All Vehicles");
                 Console.WriteLine("2. Filter by Vehicle Type");
                 Console.WriteLine("3. Rent a Vehicle");
-                Console.WriteLine("4. Exit");
+                Console.WriteLine("4. Save & Exit");
 
                 int option = GetIntInput("\nChoose an option: ", 1, 4);
 
-                if (option == 1) // View all vehicles 
-                {
-                    DisplayVehicles(vehicles);
-                }
-
-                else if (option == 2) // Filter by Vehicle Type
+                if (option == 1) // View All Vehicles
                 {
                     Console.WriteLine("\nFilter Options:");
                     Console.WriteLine("1. Cars\n2. Trucks\n3. Motorbikes");
@@ -40,7 +35,6 @@ namespace SmartCarRentalSystem
                         (filter == 3 && v is Motorbike));
                     DisplayVehicles(filtered);
                 }
-
                 else if (option == 3) // Rent a Vehicle
                 {
                     Console.WriteLine("\nWhich type of vehicle would you like to rent?");
@@ -52,67 +46,70 @@ namespace SmartCarRentalSystem
                         (type == 2 && v is Truck) ||
                         (type == 3 && v is Motorbike));
 
-
-                }
-
-                if (list.Count == 0) // Save and Exit 
-                {
-                    Console.WriteLine("\nNo vehicles available of this type.");
-                    Console.ReadLine();
-                    continue;
-                }
-
-                DisplayVehicles(list); // Display filtered vehicles
-                int select = GetIntInput("\nSelect a vehicle to rent: ", 1, list.Count);
-                Vehicle selected = list[select - 1];
-
-                if (DateTime.Now.Year - selected.Year > 10) // Check vehicle age
-                {
-                    Console.WriteLine("This vehicle is too old to rent.");
-                    Console.ReadLine();
-                    continue;
-                }
-
-                int days = GetIntInput("Enter number of rental days: ", 1, 365); // Rental days input
-                double total = 0;
-
-                if (selected is Car car) // Calculate rental cost for car
-                {
-                    bool withDriver = GetYesNo("Need a driver? (y/n): ");
-                    total = car.CalculateRentalCost(days, withDriver);
-                }
-
-                else if (selected is Truck truck) // Calculate rental cost for truck
-                {
-                    while (true)
+                    if (list.Count == 0) // No vehicles available of selected type
                     {
-                        double weight = GetDoubleInput("Enter cargo weight (kg): ");
-                        if (weight > truck.MaxLoadKg)
+                        Console.WriteLine("\nNo vehicles available of this type.");
+                        Console.ReadLine();
+                        continue;
+                    }
+
+                    DisplayVehicles(list); // Display available vehicles
+                    int select = GetIntInput("\nSelect a vehicle to rent: ", 1, list.Count);
+                    Vehicle selected = list[select - 1];
+
+                    if (DateTime.Now.Year - selected.Year > 10) // Check if vehicle is too old
+                    {
+                        Console.WriteLine("This vehicle is too old to rent.");
+                        Console.ReadLine();
+                        continue;
+                    }
+
+                    int days = GetIntInput("Enter number of rental days: ", 1, 365); // Get rental days
+                    double total = 0;
+
+                    if (selected is Car car) // Handle Car rental
+                    {
+                        bool withDriver = GetYesNo("Need a driver? (y/n): ");
+                        total = car.CalculateRentalCost(days, withDriver);
+                    }
+                    else if (selected is Truck truck) // Handle Truck rental
+                    {
+                        while (true)
                         {
-                            Console.WriteLine($"Max load is {truck.MaxLoadKg}kg.");
-                            Console.ReadLine();
-                        }
-                        else
-                        {
-                            total = truck.CalculateRentalCost(days, weight);
-                            break;
+                            double weight = GetDoubleInput("Enter cargo weight (kg): ");
+                            if (weight > truck.MaxLoadKg)
+                            {
+                                Console.WriteLine($"Max load is {truck.MaxLoadKg}kg.");
+                                Console.ReadLine();
+                            }
+                            else
+                            {
+                                total = truck.CalculateRentalCost(days, weight);
+                                break;
+                            }
                         }
                     }
-                }
+                    else if (selected is Motorbike bike) // Handle Motorbike rental
+                    {
+                        total = bike.CalculateRentalCost(days);
+                    }
 
-                else if (selected is Motorbike bike) // Calculate rental cost for motorbike
+                    if (days > 7)
+                        total *= 0.9;
+
+                    Console.WriteLine($"\nRental successful. Total Cost: ${total}");
+                    Console.ReadLine();
+                }
+                else if (option == 4) // Save & Exit
                 {
-                    total = bike.CalculateRentalCost(days);
+                    SaveData();
+                    Console.WriteLine("\nData saved successfully. Goodbye!");
+                    Console.ReadLine();
+                    break;
                 }
 
-                if (days > 7)
-                    total *= 0.9;
-
-                Console.WriteLine($"\nRental successful. Total Cost: ${total}");
-                Console.ReadLine();
             }
 
-        }
 
         static void LoadData()
         {
