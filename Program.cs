@@ -28,6 +28,11 @@ namespace SmartCarRentalSystem
                     Console.WriteLine("Thank you for using SmartCar Rentals!");
                     break;
                 }
+
+                Vehicle selected = vehicles[choice - 1]; // Get selected vehicle
+
+                int days = GetIntInput("Enter number of rental days: ", 1, 365);
+
             }
         }
     }
