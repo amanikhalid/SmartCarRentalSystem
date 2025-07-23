@@ -16,67 +16,15 @@ namespace SmartCarRentalSystem
             while (true)
             {
                 Console.Clear();
-                Console.WriteLine(" SmartCar Rentals System ");
+                Console.WriteLine("\nSmartCar Rentals Main Menu");
+                Console.WriteLine("1. View All Vehicles");
+                Console.WriteLine("2. Filter by Vehicle Type");
+                Console.WriteLine("3. Rent a Vehicle");
+                Console.WriteLine("4. Exit");
 
-                Console.WriteLine("\nAvailable Vehicles:");
-                for (int i = 0; i < vehicles.Count; i++)
-                {
-                    Console.WriteLine($"{i + 1}. {vehicles[i].GetInfo()}");
-                }
+                int option = GetIntInput("\nChoose an option: ", 1, 4);
 
-                int choice = GetIntInput("\nChoose vehicle to rent (0 to exit): ", 0, vehicles.Count);
-                if (choice == 0)
-                {
-                    SaveData(); // Save before exiting
-                    Console.WriteLine("Thank you for using SmartCar Rentals!");
-                    Console.ReadLine(); // Pause before closing
-                    break;
-                }
 
-                Vehicle selected = vehicles[choice - 1];
-                int days = GetIntInput("Enter number of rental days: ", 1, 365);
-
-                if (DateTime.Now.Year - selected.Year > 10)
-                {
-                    Console.WriteLine("Cannot rent this vehicle. It's older than 10 years.");
-                    Console.ReadLine();
-                    continue;
-                }
-
-                double totalCost = 0;
-
-                if (selected is Car car)
-                {
-                    bool withDriver = GetYesNo("Do you want a driver? (y/n): ");
-                    totalCost = car.CalculateRentalCost(days, withDriver);
-                }
-                else if (selected is Truck truck)
-                {
-                    while (true)
-                    {
-                        double weight = GetDoubleInput("Enter cargo weight (kg): ");
-                        if (weight > truck.MaxLoadKg)
-                        {
-                            Console.WriteLine($"Cannot load more than {truck.MaxLoadKg} kg.");
-                            Console.ReadLine();
-                        }
-                        else
-                        {
-                            totalCost = truck.CalculateRentalCost(days, weight);
-                            break;
-                        }
-                    }
-                }
-                else if (selected is Motorbike motorbike)
-                {
-                    totalCost = motorbike.CalculateRentalCost(days);
-                }
-
-                if (days > 7)
-                    totalCost *= 0.9; // 10% discount
-
-                Console.WriteLine($"Total Rental Cost: ${totalCost}");
-                Console.ReadLine(); // Pause before showing menu again
             }
         }
 
