@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Runtime.ConstrainedExecution;
 
@@ -42,10 +43,21 @@ namespace SmartCarRentalSystem
                 double totalCost = 0;
 
                 // Calculate rental cost based on vehicle type
-                if (selected is Car car) 
+                if (selected is Car car)
                 {
                     bool withDriver = GetYesNo("Do you want a driver? (y/n): ");
                     totalCost = car.CalculateRentalCost(days, withDriver);
+                }
+
+                else if (selected is Truck truck)
+                {
+                    double weight = GetDoubleInput("Enter cargo weight (kg): ");
+                    if (weight > truck.MaxLoadKg)
+                    {
+                        Console.WriteLine($"Cannot load more than {truck.MaxLoadKg} kg.");
+                        continue;
+                    }
+                    totalCost = truck.CalculateRentalCost(days, weight);
                 }
             }
         }
