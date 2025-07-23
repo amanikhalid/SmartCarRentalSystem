@@ -235,6 +235,18 @@ namespace SmartCarRentalSystem
                 Console.WriteLine("Please enter y or n.");
             }
         }
+        static void LoadData() // Load vehicle data from file or initialize with default values
+        {
+            vehicles = new List<Vehicle>
+            {
+                new Car { Brand = "BMW", Model = "740Li", Year = 2023, LicensePlate = "BMW001", IsLuxury = true },
+                new Car { Brand = "Porsche", Model = "Panamera", Year = 2024, LicensePlate = "POR001", IsLuxury = true },
+                new Car { Brand = "Kia", Model = "K5", Year = 2023, LicensePlate = "KIA123", IsLuxury = false },
+                new Truck { Brand = "Volvo", Model = "FMX", Year = 2021, LicensePlate = "TRK001", MaxLoadKg = 20000 },
+                new Motorbike { Brand = "Suzuki", Model = "GSX", Year = 2020, LicensePlate = "BIK001", RequiresHelmet = true },
+                new Motorbike { Brand = "Yamaha", Model = "R15", Year = 2021, LicensePlate = "BIK002", RequiresHelmet = true }
+            };
+        }
 
 
 
