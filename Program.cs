@@ -24,6 +24,10 @@ namespace SmartCarRentalSystem
 
                 int option = GetIntInput("\nChoose an option: ", 1, 4);
 
+                if (option == 1) // View all vehicles 
+                {
+                    DisplayVehicles(vehicles);
+                }
 
             }
         }
