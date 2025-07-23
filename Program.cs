@@ -27,7 +27,7 @@ namespace SmartCarRentalSystem
                 int choice = GetIntInput("\nChoose vehicle to rent (0 to exit): ", 0, vehicles.Count);
                 if (choice == 0)
                 {
-                    
+
                     Console.WriteLine("Thank you for using SmartCar Rentals!");
                     break;
                 }
@@ -62,7 +62,7 @@ namespace SmartCarRentalSystem
                 }
 
                 // Check if the vehicle is a motorbike and calculate cost accordingly
-                else if (selected is Motorbike motorbike) 
+                else if (selected is Motorbike motorbike)
                 {
                     totalCost = motorbike.CalculateRentalCost(days);
                 }
@@ -108,7 +108,38 @@ namespace SmartCarRentalSystem
                     Console.WriteLine("Invalid input. Please enter y or n.");
                 }
             }
+
+            static void LoadData() 
+            {
+                if (!File.Exists(dataFile))
+                {
+                    vehicles = new List<Vehicle>
+                {
+                    new Car { Brand = "Toyota", Model = "Corolla", Year = 2022, LicensePlate = "A123", IsLuxury = false },
+                    new Car { Brand = "Mercedes", Model = "E300", Year = 2023, LicensePlate = "B456", IsLuxury = true },
+                    new Truck { Brand = "Volvo", Model = "FH16", Year = 2021, LicensePlate = "C789", MaxLoadKg = 18000 },
+                    new Motorbike { Brand = "Honda", Model = "CBR", Year = 2019, LicensePlate = "D000", RequiresHelmet = true }
+                };
+                    SaveData(); // Save initial data
+                    return;
+                }
+
+                string[] lines = File.ReadAllLines(dataFile);
+                foreach (var line in lines)
+                {
+                    string[] parts = line.Split('|');
+                    string type = parts[0];
+                    if (type == "Car")
+                        vehicles.Add(new Car { Brand = parts[1], Model = parts[2], Year = int.Parse(parts[3]), LicensePlate = parts[4], IsLuxury = bool.Parse(parts[5]) });
+                    else if (type == "Truck")
+                        vehicles.Add(new Truck { Brand = parts[1], Model = parts[2], Year = int.Parse(parts[3]), LicensePlate = parts[4], MaxLoadKg = double.Parse(parts[5]) });
+                    else if (type == "Motorbike")
+                        vehicles.Add(new Motorbike { Brand = parts[1], Model = parts[2], Year = int.Parse(parts[3]), LicensePlate = parts[4], RequiresHelmet = bool.Parse(parts[5]) });
+                }
+            }
+
         }
+    }
 
         abstract class Vehicle
         {
@@ -175,10 +206,9 @@ namespace SmartCarRentalSystem
         }
 
         
-
-    }
+ }
          
-}
+
 
 
 
