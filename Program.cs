@@ -220,7 +220,19 @@ namespace SmartCarRentalSystem
                 Console.Write(prompt);
                 if (double.TryParse(Console.ReadLine(), out double val) && val >= 0)
                     return val;
-                Console.WriteLine("❌ Invalid input. Try again.");
+                Console.WriteLine("Invalid input. Try again.");
+            }
+        }
+
+        static bool GetYesNo(string prompt) // Get yes/no input 
+        {
+            while (true)
+            {
+                Console.Write(prompt);
+                string input = Console.ReadLine().ToLower();
+                if (input == "y" || input == "yes") return true;
+                if (input == "n" || input == "no") return false;
+                Console.WriteLine("Please enter y or n.");
             }
         }
 
