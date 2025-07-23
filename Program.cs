@@ -8,7 +8,7 @@ namespace SmartCarRentalSystem
 {
     internal class Program
     {
-
+        static List<Vehicle> vehicles = new List<Vehicle>(); // List to store available vehicles
 
         static void Main(string[] args)
         {
@@ -26,7 +26,7 @@ namespace SmartCarRentalSystem
                 int choice = GetIntInput("\nChoose vehicle to rent (0 to exit): ", 0, vehicles.Count);
                 if (choice == 0)
                 {
-                    SaveData();
+                    
                     Console.WriteLine("Thank you for using SmartCar Rentals!");
                     break;
                 }
