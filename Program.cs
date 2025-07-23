@@ -213,6 +213,17 @@ namespace SmartCarRentalSystem
             }
         }
 
+        static double GetDoubleInput(string prompt) // Get double input with validation
+        {
+            while (true)
+            {
+                Console.Write(prompt);
+                if (double.TryParse(Console.ReadLine(), out double val) && val >= 0)
+                    return val;
+                Console.WriteLine("❌ Invalid input. Try again.");
+            }
+        }
+
 
 
 
