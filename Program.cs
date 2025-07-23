@@ -29,6 +29,18 @@ namespace SmartCarRentalSystem
                     DisplayVehicles(vehicles);
                 }
 
+                else if (option == 2) // Filter by Vehicle Type
+                {
+                    Console.WriteLine("\nFilter Options:");
+                    Console.WriteLine("1. Cars\n2. Trucks\n3. Motorbikes");
+                    int filter = GetIntInput("Choose type: ", 1, 3);
+                    List<Vehicle> filtered = vehicles.FindAll(v =>
+                        (filter == 1 && v is Car) ||
+                        (filter == 2 && v is Truck) ||
+                        (filter == 3 && v is Motorbike));
+                    DisplayVehicles(filtered);
+                }
+
             }
         }
 
