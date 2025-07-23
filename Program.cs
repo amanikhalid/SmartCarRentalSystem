@@ -59,7 +59,19 @@ namespace SmartCarRentalSystem
                     }
                     totalCost = truck.CalculateRentalCost(days, weight);
                 }
+
+                // Check if the vehicle is a motorbike and calculate cost accordingly
+                else if (selected is Motorbike motorbike) 
+                {
+                    totalCost = motorbike.CalculateRentalCost(days);
+                }
+
+                if (days > 7)
+                    totalCost *= 0.9; // 10% discount
+
+                Console.WriteLine($"✅ Total Rental Cost: ${totalCost}");
             }
         }
+        }
     }
-}
+}}
