@@ -248,12 +248,29 @@ namespace SmartCarRentalSystem
             };
         }
 
+        static void SaveData() // Save vehicle data to file
+        {
+            using StreamWriter writer = new StreamWriter(dataFile);
+            foreach (var v in vehicles)
+            {
+                if (v is Car car)
+                    writer.WriteLine($"Car|{car.Brand}|{car.Model}|{car.Year}|{car.LicensePlate}|{car.IsLuxury}");
+                else if (v is Truck truck)
+                    writer.WriteLine($"Truck|{truck.Brand}|{truck.Model}|{truck.Year}|{truck.LicensePlate}|{truck.MaxLoadKg}");
+                else if (v is Motorbike bike)
+                    writer.WriteLine($"Motorbike|{bike.Brand}|{bike.Model}|{bike.Year}|{bike.LicensePlate}|{bike.RequiresHelmet}");
+            }
+        }
+    }
 
 
 
 
-        // Base class
-        abstract class Vehicle
+
+
+
+    // Base class
+    abstract class Vehicle
         {
             public string Brand { get; set; }
             public string Model { get; set; }
@@ -311,4 +328,4 @@ namespace SmartCarRentalSystem
             public override string GetInfo() => $"{base.GetInfo()} | Motorbike | Helmet Required: {(RequiresHelmet ? "Yes" : "No")}";
         }
     }
-}
+
