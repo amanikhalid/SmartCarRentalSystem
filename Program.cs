@@ -82,6 +82,24 @@ namespace SmartCarRentalSystem
                     total = car.CalculateRentalCost(days, withDriver);
                 }
 
+                else if (selected is Truck truck) // Calculate rental cost for truck
+                {
+                    while (true)
+                    {
+                        double weight = GetDoubleInput("Enter cargo weight (kg): ");
+                        if (weight > truck.MaxLoadKg)
+                        {
+                            Console.WriteLine($"Max load is {truck.MaxLoadKg}kg.");
+                            Console.ReadLine();
+                        }
+                        else
+                        {
+                            total = truck.CalculateRentalCost(days, weight);
+                            break;
+                        }
+                    }
+                }
+
             }
 
         static void LoadData()
