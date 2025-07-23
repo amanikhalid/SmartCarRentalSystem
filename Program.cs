@@ -123,7 +123,13 @@ namespace SmartCarRentalSystem
 
             public override string GetInfo() => $"{base.GetInfo()} | Truck | Max Load: {MaxLoadKg}kg"; // Display truck info
         }
-    }
+
+        class Motorbike : Vehicle // Inherits from Vehicle
+        
+        {
+
+
+        }
          
         
         
