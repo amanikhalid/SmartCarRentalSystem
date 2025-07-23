@@ -85,6 +85,15 @@ namespace SmartCarRentalSystem
             public virtual double CalculateRentalCost(int days) => 0;
             public virtual string GetInfo() => $"{Brand} {Model} {Year}";
         }
+        
+        class Car : Vehicle // Inherits from Vehicle 
+        { 
+
+
+
+
+        }
+
 
 
     }
