@@ -100,7 +100,19 @@ namespace SmartCarRentalSystem
                     }
                 }
 
+                else if (selected is Motorbike bike) // Calculate rental cost for motorbike
+                {
+                    total = bike.CalculateRentalCost(days);
+                }
+
+                if (days > 7)
+                    total *= 0.9;
+
+                Console.WriteLine($"\nRental successful. Total Cost: ${total}");
+                Console.ReadLine();
             }
+
+        }
 
         static void LoadData()
         {
