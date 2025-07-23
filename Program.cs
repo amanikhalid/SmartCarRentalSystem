@@ -114,6 +114,12 @@ namespace SmartCarRentalSystem
             {
                 return days * 100;
             }
+
+            public double CalculateRentalCost(int days, double cargoWeight) // Overloaded method to include cargo weight
+            
+            {
+                return CalculateRentalCost(days) + (cargoWeight * 0.01); // optional extra fee per kg
+            }
         }
          
         
