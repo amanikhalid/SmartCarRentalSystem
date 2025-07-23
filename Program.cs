@@ -66,6 +66,13 @@ namespace SmartCarRentalSystem
                 int select = GetIntInput("\nSelect a vehicle to rent: ", 1, list.Count);
                 Vehicle selected = list[select - 1];
 
+                if (DateTime.Now.Year - selected.Year > 10) // Check vehicle age
+                {
+                    Console.WriteLine("This vehicle is too old to rent.");
+                    Console.ReadLine();
+                    continue;
+                }
+
             }
 
         static void LoadData()
