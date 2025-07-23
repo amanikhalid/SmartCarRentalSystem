@@ -95,13 +95,16 @@ namespace SmartCarRentalSystem
                 return days * (IsLuxury ? 80 : 60);
             }
 
-
+            public double CalculateRentalCost(int days, bool withDriver) // Overloaded method to include driver option
+            
+            {
+                double baseCost = CalculateRentalCost(days);
+                return withDriver ? baseCost + (days * 20) : baseCost; // additional cost for driver
+            }
 
 
         }
 
-
-
     }
-    }
+}
 
