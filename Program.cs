@@ -87,7 +87,13 @@ namespace SmartCarRentalSystem
         }
         
         class Car : Vehicle // Inherits from Vehicle 
-        { 
+        {
+            public bool IsLuxury { get; set; } // Indicates if the car is luxury
+
+            public override double CalculateRentalCost(int days)
+            {
+                return days * (IsLuxury ? 80 : 60);
+            }
 
 
 
