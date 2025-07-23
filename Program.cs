@@ -150,6 +150,17 @@ namespace SmartCarRentalSystem
             }
         }
 
+        static double GetDoubleInput(string prompt) // Method to get double input from user
+        {
+            while (true)
+            {
+                Console.Write(prompt);
+                if (double.TryParse(Console.ReadLine(), out double value) && value >= 0)
+                    return value;
+                Console.WriteLine("Invalid input. Try again.");
+            }
+        }
+
     }
          
         
