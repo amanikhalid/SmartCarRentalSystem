@@ -200,8 +200,21 @@ namespace SmartCarRentalSystem
                 Console.WriteLine($"{i + 1}. {list[i].GetInfo()}");
             }
             Console.ReadLine();
+
         }
-        
+        static int GetIntInput(string prompt, int min, int max) // Get integer input with validation
+        {
+            while (true)
+            {
+                Console.Write(prompt);
+                if (int.TryParse(Console.ReadLine(), out int val) && val >= min && val <= max)
+                    return val;
+                Console.WriteLine("Invalid input. Try again.");
+            }
+        }
+
+
+
 
 
         // Base class
