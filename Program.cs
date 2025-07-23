@@ -81,8 +81,12 @@ namespace SmartCarRentalSystem
             public int Year { get; set; }
             public string LicensePlate { get; set; }
 
-
-
+            // Constructor to initialize vehicle properties
+            public virtual double CalculateRentalCost(int days) => 0;
+            public virtual string GetInfo() => $"{Brand} {Model} {Year}";
         }
+
+
+    }
     }
 
