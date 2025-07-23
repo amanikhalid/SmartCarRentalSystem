@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.ConstrainedExecution;
 
 namespace SmartCarRentalSystem
 {
@@ -38,8 +39,14 @@ namespace SmartCarRentalSystem
                     Console.WriteLine("❌ Cannot rent this vehicle. It's older than 10 years.");
                     continue;
                 }
-
                 double totalCost = 0;
+
+                // Calculate rental cost based on vehicle type
+                if (selected is Car car) 
+                {
+                    bool withDriver = GetYesNo("Do you want a driver? (y/n): ");
+                    totalCost = car.CalculateRentalCost(days, withDriver);
+                }
             }
         }
     }
