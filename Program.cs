@@ -105,9 +105,18 @@ namespace SmartCarRentalSystem
             public override string GetInfo() => $"{base.GetInfo()} | Car | Luxury: {(IsLuxury ? "Yes" : "No")}"; // Display car info
         }
 
-
+        class Truck : Vehicle // Inherits from Vehicle
+        {
+            
+        }
+         
+        
+        
     }
 
+
 }
+
+
 
 
