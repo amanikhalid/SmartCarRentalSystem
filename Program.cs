@@ -111,11 +111,11 @@ namespace SmartCarRentalSystem
             }
 
 
-        static void LoadData()
-        {
-            if (!File.Exists(dataFile))
+            static void LoadData()
             {
-                vehicles = new List<Vehicle>
+                if (!File.Exists(dataFile))
+                {
+                    vehicles = new List<Vehicle>
                 {
                     new Car { Brand = "BMW", Model = "740Li", Year = 2023, LicensePlate = "BMW001", IsLuxury = true },
                     new Car { Brand = "Porsche", Model = "Panamera", Year = 2024, LicensePlate = "POR001", IsLuxury = true },
@@ -124,129 +124,143 @@ namespace SmartCarRentalSystem
                     new Motorbike { Brand = "Suzuki", Model = "GSX", Year = 2020, LicensePlate = "BIK001", RequiresHelmet = true },
                     new Motorbike { Brand = "Yamaha", Model = "R15", Year = 2021, LicensePlate = "BIK002", RequiresHelmet = true }
                 };
-                SaveData(); // Save default data on first run
-                return;
+                    SaveData(); // Save default data on first run
+                    return;
+                }
+
+                string[] lines = File.ReadAllLines(dataFile);
+                foreach (var line in lines)
+                {
+                    string[] parts = line.Split('|');
+                    string type = parts[0];
+                    if (type == "Car")
+                        vehicles.Add(new Car { Brand = parts[1], Model = parts[2], Year = int.Parse(parts[3]), LicensePlate = parts[4], IsLuxury = bool.Parse(parts[5]) });
+                    else if (type == "Truck")
+                        vehicles.Add(new Truck { Brand = parts[1], Model = parts[2], Year = int.Parse(parts[3]), LicensePlate = parts[4], MaxLoadKg = double.Parse(parts[5]) });
+                    else if (type == "Motorbike")
+                        vehicles.Add(new Motorbike { Brand = parts[1], Model = parts[2], Year = int.Parse(parts[3]), LicensePlate = parts[4], RequiresHelmet = bool.Parse(parts[5]) });
+                }
             }
 
-            string[] lines = File.ReadAllLines(dataFile);
-            foreach (var line in lines)
+            static void SaveData()
             {
-                string[] parts = line.Split('|');
-                string type = parts[0];
-                if (type == "Car")
-                    vehicles.Add(new Car { Brand = parts[1], Model = parts[2], Year = int.Parse(parts[3]), LicensePlate = parts[4], IsLuxury = bool.Parse(parts[5]) });
-                else if (type == "Truck")
-                    vehicles.Add(new Truck { Brand = parts[1], Model = parts[2], Year = int.Parse(parts[3]), LicensePlate = parts[4], MaxLoadKg = double.Parse(parts[5]) });
-                else if (type == "Motorbike")
-                    vehicles.Add(new Motorbike { Brand = parts[1], Model = parts[2], Year = int.Parse(parts[3]), LicensePlate = parts[4], RequiresHelmet = bool.Parse(parts[5]) });
+                using StreamWriter writer = new StreamWriter(dataFile);
+                foreach (var v in vehicles)
+                {
+                    if (v is Car car)
+                        writer.WriteLine($"Car|{car.Brand}|{car.Model}|{car.Year}|{car.LicensePlate}|{car.IsLuxury}");
+                    else if (v is Truck truck)
+                        writer.WriteLine($"Truck|{truck.Brand}|{truck.Model}|{truck.Year}|{truck.LicensePlate}|{truck.MaxLoadKg}");
+                    else if (v is Motorbike bike)
+                        writer.WriteLine($"Motorbike|{bike.Brand}|{bike.Model}|{bike.Year}|{bike.LicensePlate}|{bike.RequiresHelmet}");
+                }
             }
-        }
 
-        static void SaveData()
-        {
-            using StreamWriter writer = new StreamWriter(dataFile);
-            foreach (var v in vehicles)
+            static int GetIntInput(string prompt, int min, int max)
             {
-                if (v is Car car)
-                    writer.WriteLine($"Car|{car.Brand}|{car.Model}|{car.Year}|{car.LicensePlate}|{car.IsLuxury}");
-                else if (v is Truck truck)
-                    writer.WriteLine($"Truck|{truck.Brand}|{truck.Model}|{truck.Year}|{truck.LicensePlate}|{truck.MaxLoadKg}");
-                else if (v is Motorbike bike)
-                    writer.WriteLine($"Motorbike|{bike.Brand}|{bike.Model}|{bike.Year}|{bike.LicensePlate}|{bike.RequiresHelmet}");
+                while (true)
+                {
+                    Console.Write(prompt);
+                    if (int.TryParse(Console.ReadLine(), out int value) && value >= min && value <= max)
+                        return value;
+                    Console.WriteLine("Invalid input. Try again.");
+                }
             }
-        }
 
-        static int GetIntInput(string prompt, int min, int max)
-        {
-            while (true)
+            static double GetDoubleInput(string prompt)
             {
-                Console.Write(prompt);
-                if (int.TryParse(Console.ReadLine(), out int value) && value >= min && value <= max)
-                    return value;
-                Console.WriteLine("Invalid input. Try again.");
+                while (true)
+                {
+                    Console.Write(prompt);
+                    if (double.TryParse(Console.ReadLine(), out double value) && value >= 0)
+                        return value;
+                    Console.WriteLine("Invalid input. Try again.");
+                }
             }
-        }
 
-        static double GetDoubleInput(string prompt)
-        {
-            while (true)
+            static bool GetYesNo(string prompt)
             {
-                Console.Write(prompt);
-                if (double.TryParse(Console.ReadLine(), out double value) && value >= 0)
-                    return value;
-                Console.WriteLine("Invalid input. Try again.");
+                while (true)
+                {
+                    Console.Write(prompt);
+                    string input = Console.ReadLine().ToLower();
+                    if (input == "y" || input == "yes") return true;
+                    if (input == "n" || input == "no") return false;
+                    Console.WriteLine("Invalid input. Please enter y or n.");
+                }
             }
         }
 
-        static bool GetYesNo(string prompt)
+        static void DisplayVehicles(List<Vehicle> list) // Display available vehicles
         {
-            while (true)
+            Console.Clear();
+            Console.WriteLine("\nAvailable Vehicles");
+            for (int i = 0; i < list.Count; i++)
             {
-                Console.Write(prompt);
-                string input = Console.ReadLine().ToLower();
-                if (input == "y" || input == "yes") return true;
-                if (input == "n" || input == "no") return false;
-                Console.WriteLine("Invalid input. Please enter y or n.");
+                Console.WriteLine($"{i + 1}. {list[i].GetInfo()}");
             }
+            Console.ReadLine();
         }
-    }
+        
 
-    // Base class
-    abstract class Vehicle
-    {
-        public string Brand { get; set; }
-        public string Model { get; set; }
-        public int Year { get; set; }
-        public string LicensePlate { get; set; }
 
-        public virtual double CalculateRentalCost(int days) => 0;
-        public virtual string GetInfo() => $"{Brand} {Model} {Year}";
-    }
-
-    class Car : Vehicle
-    {
-        public bool IsLuxury { get; set; }
-
-        public override double CalculateRentalCost(int days)
+        // Base class
+        abstract class Vehicle
         {
-            return days * (IsLuxury ? 80 : 60);
+            public string Brand { get; set; }
+            public string Model { get; set; }
+            public int Year { get; set; }
+            public string LicensePlate { get; set; }
+
+            public virtual double CalculateRentalCost(int days) => 0;
+            public virtual string GetInfo() => $"{Brand} {Model} {Year}";
         }
 
-        public double CalculateRentalCost(int days, bool withDriver)
+        class Car : Vehicle
         {
-            double baseCost = CalculateRentalCost(days);
-            return withDriver ? baseCost + (days * 20) : baseCost;
+            public bool IsLuxury { get; set; }
+
+            public override double CalculateRentalCost(int days)
+            {
+                return days * (IsLuxury ? 80 : 60);
+            }
+
+            public double CalculateRentalCost(int days, bool withDriver)
+            {
+                double baseCost = CalculateRentalCost(days);
+                return withDriver ? baseCost + (days * 20) : baseCost;
+            }
+
+            public override string GetInfo() => $"{base.GetInfo()} | Car | Luxury: {(IsLuxury ? "Yes" : "No")}";
         }
 
-        public override string GetInfo() => $"{base.GetInfo()} | Car | Luxury: {(IsLuxury ? "Yes" : "No")}";
-    }
-
-    class Truck : Vehicle
-    {
-        public double MaxLoadKg { get; set; }
-
-        public override double CalculateRentalCost(int days)
+        class Truck : Vehicle
         {
-            return days * 100;
+            public double MaxLoadKg { get; set; }
+
+            public override double CalculateRentalCost(int days)
+            {
+                return days * 100;
+            }
+
+            public double CalculateRentalCost(int days, double cargoWeight)
+            {
+                return CalculateRentalCost(days) + (cargoWeight * 0.01);
+            }
+
+            public override string GetInfo() => $"{base.GetInfo()} | Truck | Max Load: {MaxLoadKg}kg";
         }
 
-        public double CalculateRentalCost(int days, double cargoWeight)
+        class Motorbike : Vehicle
         {
-            return CalculateRentalCost(days) + (cargoWeight * 0.01);
+            public bool RequiresHelmet { get; set; }
+
+            public override double CalculateRentalCost(int days)
+            {
+                return days * 40;
+            }
+
+            public override string GetInfo() => $"{base.GetInfo()} | Motorbike | Helmet Required: {(RequiresHelmet ? "Yes" : "No")}";
         }
-
-        public override string GetInfo() => $"{base.GetInfo()} | Truck | Max Load: {MaxLoadKg}kg";
-    }
-
-    class Motorbike : Vehicle
-    {
-        public bool RequiresHelmet { get; set; }
-
-        public override double CalculateRentalCost(int days)
-        {
-            return days * 40;
-        }
-
-        public override string GetInfo() => $"{base.GetInfo()} | Motorbike | Helmet Required: {(RequiresHelmet ? "Yes" : "No")}";
     }
 }
