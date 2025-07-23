@@ -107,7 +107,13 @@ namespace SmartCarRentalSystem
 
         class Truck : Vehicle // Inherits from Vehicle
         {
+            public double MaxLoadKg { get; set; } // Maximum load capacity in kg
+
+            public override double CalculateRentalCost(int days) // Base rental cost for truck
             
+            {
+                return days * 100;
+            }
         }
          
         
