@@ -73,6 +73,9 @@ namespace SmartCarRentalSystem
                     continue;
                 }
 
+                int days = GetIntInput("Enter number of rental days: ", 1, 365); // Rental days input
+                double total = 0;
+
             }
 
         static void LoadData()
