@@ -54,6 +54,14 @@ namespace SmartCarRentalSystem
 
 
                 }
+
+                if (list.Count == 0) // Save and Exit 
+                {
+                    Console.WriteLine("\nNo vehicles available of this type.");
+                    Console.ReadLine();
+                    continue;
+                }
+
             }
 
         static void LoadData()
