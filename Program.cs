@@ -33,6 +33,13 @@ namespace SmartCarRentalSystem
 
                 int days = GetIntInput("Enter number of rental days: ", 1, 365);
 
+                if (DateTime.Now.Year - selected.Year > 10) // Check if vehicle is older than 10 years
+                {
+                    Console.WriteLine("❌ Cannot rent this vehicle. It's older than 10 years.");
+                    continue;
+                }
+
+                double totalCost = 0;
             }
         }
     }
