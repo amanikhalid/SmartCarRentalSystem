@@ -120,7 +120,10 @@ namespace SmartCarRentalSystem
             {
                 return CalculateRentalCost(days) + (cargoWeight * 0.01); // optional extra fee per kg
             }
+
+            public override string GetInfo() => $"{base.GetInfo()} | Truck | Max Load: {MaxLoadKg}kg"; // Display truck info
         }
+    }
          
         
         
