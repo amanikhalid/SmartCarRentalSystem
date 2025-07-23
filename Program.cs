@@ -37,7 +37,7 @@ namespace SmartCarRentalSystem
 
                 if (DateTime.Now.Year - selected.Year > 10) // Check if vehicle is older than 10 years
                 {
-                    Console.WriteLine("❌ Cannot rent this vehicle. It's older than 10 years.");
+                    Console.WriteLine("Cannot rent this vehicle. It's older than 10 years.");
                     continue;
                 }
                 double totalCost = 0;
@@ -69,9 +69,11 @@ namespace SmartCarRentalSystem
                 if (days > 7)
                     totalCost *= 0.9; // 10% discount
 
-                Console.WriteLine($"✅ Total Rental Cost: ${totalCost}");
+                Console.WriteLine($"Total Rental Cost: ${totalCost}");
             }
         }
-        }
+
+
     }
-}}
+}
+
