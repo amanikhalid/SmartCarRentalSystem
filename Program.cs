@@ -102,9 +102,12 @@ namespace SmartCarRentalSystem
                 return withDriver ? baseCost + (days * 20) : baseCost; // additional cost for driver
             }
 
-
+            public override string GetInfo() => $"{base.GetInfo()} | Car | Luxury: {(IsLuxury ? "Yes" : "No")}"; // Display car info
         }
 
+
     }
+
 }
+
 
