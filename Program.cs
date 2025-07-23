@@ -19,6 +19,15 @@ namespace SmartCarRentalSystem
                 {
                     Console.WriteLine($"{i + 1}. {vehicles[i].GetInfo()}");
                 }
+
+                // Prompt user to choose a vehicle to rent
+                int choice = GetIntInput("\nChoose vehicle to rent (0 to exit): ", 0, vehicles.Count);
+                if (choice == 0)
+                {
+                    SaveData();
+                    Console.WriteLine("Thank you for using SmartCar Rentals!");
+                    break;
+                }
             }
         }
     }
