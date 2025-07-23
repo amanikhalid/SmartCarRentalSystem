@@ -152,7 +152,7 @@ namespace SmartCarRentalSystem
 
         static double GetDoubleInput(string prompt) // Method to get double input from user
         {
-            while (true)
+            while (true) // Prompt user for double input
             {
                 Console.Write(prompt);
                 if (double.TryParse(Console.ReadLine(), out double value) && value >= 0)
@@ -161,10 +161,20 @@ namespace SmartCarRentalSystem
             }
         }
 
+        static bool GetYesNo(string prompt) // Method to get yes/no input from user
+        {
+            while (true) // Prompt user for yes/no input
+            {
+                Console.Write(prompt);
+                string input = Console.ReadLine().ToLower();
+                if (input == "y" || input == "yes") return true;
+                if (input == "n" || input == "no") return false;
+                Console.WriteLine("Invalid input. Please enter y or n.");
+            }
+        }
+
     }
          
-        
-        
 }
 
 
