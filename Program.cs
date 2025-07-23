@@ -1,4 +1,8 @@
-﻿namespace SmartCarRentalSystem
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+
+namespace SmartCarRentalSystem
 {
     internal class Program
     {
