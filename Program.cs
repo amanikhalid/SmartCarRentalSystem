@@ -62,6 +62,10 @@ namespace SmartCarRentalSystem
                     continue;
                 }
 
+                DisplayVehicles(list); // Display filtered vehicles
+                int select = GetIntInput("\nSelect a vehicle to rent: ", 1, list.Count);
+                Vehicle selected = list[select - 1];
+
             }
 
         static void LoadData()
